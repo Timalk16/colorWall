@@ -44,13 +44,14 @@ function setRandomColors(isInitial) {
 
         if (isLocked) {
             colors.push(text.textContent)
+            return
         }
 
         const color = isInitial
             ? colors[index]
                 ? colors[index]
-                : chroma.random()
-            : chroma.random()
+                : generateRandomColor()
+            : generateRandomColor()
 
         if (!isInitial) {
             colors.push(color)
@@ -72,7 +73,11 @@ function setTextColor(text, color) {
 }
 
 function updateLocationHash(colors = []) {
-    document.location.hash = colors.map((col) => col.toString().substring(1)).join('-')
+    document.location.hash = colors
+        .map((col) => {
+            return col.toString().substring(1)
+        })
+        .join('-')
 }
 
 function getColorsFromHash() {
